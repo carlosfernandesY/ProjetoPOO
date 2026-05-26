@@ -1,4 +1,4 @@
-package org.ifgoiano.barbearia.app;
+package org.ifgoiano.barbearia;
 
 import org.ifgoiano.barbearia.dao.ClienteDAO;
 import org.ifgoiano.barbearia.model.Cliente;

@@ -17,16 +17,17 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
     }
 
     @Override
-    public void create(Cliente object) {
+    public boolean create(Cliente object) {
         String sql = "INSERT INTO Cliente (nome,email,telefone) VALUES (?,?,?);";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setString(1, object.getNome());
             preparedStatement.setString(2, object.getEmail());
             preparedStatement.setString(3, object.getTelefone());
-            preparedStatement.execute();
+            return  preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     @Override
