@@ -8,5 +8,4 @@ public class ClienteService {
     public ClienteService(ClienteDAO clienteDAO) {
         this.clienteDAO = clienteDAO;
     }
-
 }
