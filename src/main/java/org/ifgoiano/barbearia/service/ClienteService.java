@@ -9,6 +9,4 @@ public class ClienteService {
         this.clienteDAO = clienteDAO;
     }
 
-
-
 }
