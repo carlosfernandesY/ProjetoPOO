@@ -4,6 +4,7 @@ import org.ifgoiano.barbearia.connection.ConnectionFactory;
 import org.ifgoiano.barbearia.dao.interfaceClass.EntidadeDAO;
 import org.ifgoiano.barbearia.model.Barbeiro;
 
+import java.awt.desktop.AboutEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,14 +18,16 @@ public class BarbeiroDAO implements EntidadeDAO<Barbeiro> {
         this.connection = (Connection) new ConnectionFactory().getConnection();
     }
     @Override
-    public void create(Barbeiro object) {
+    public boolean create(Barbeiro object) {
         String sql = "INSERT INTO Barbeiro (nome) VALUES (?);";
 
         try(PreparedStatement preparedStatement = this.connection.prepareStatement(sql)){
             preparedStatement.setString(1,object.getNome());
+           return preparedStatement.execute();
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
+        return  false;
     }
 
     @Override

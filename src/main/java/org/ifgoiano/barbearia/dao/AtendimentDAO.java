@@ -1,4 +1,4 @@
-package org.ifgoiano.barbearia.dao;
+
 
 import org.ifgoiano.barbearia.connection.ConnectionFactory;
 import org.ifgoiano.barbearia.dao.interfaceClass.EntidadeDAO;
@@ -15,18 +15,18 @@ public class AtendimentDAO implements EntidadeDAO<Atendimento> {
         this.connection = new ConnectionFactory().getConnection();
     }
     @Override
-    public void create(Atendimento object) {
+    public boolean  create(Atendimento object) {
         String sql = "INSERT INTO Atendimento(idClienteFK,idBarbeiro,data,valorTotal) VALUES(?, ?, ?, ?);";
         try(PreparedStatement preparedStatement = this.connection.prepareStatement(sql)){
             preparedStatement.setInt(1,object.getCliente().getIdCliente());
             preparedStatement.setInt(2,object.getBarbeiro().getIdBarbeiro());
             preparedStatement.setDate(3,object.getData());
             preparedStatement.setDouble(4,object.getValorTotal());
-            preparedStatement.execute();
+          return   preparedStatement.execute();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-
+return  false;
     }
 
     @Override
