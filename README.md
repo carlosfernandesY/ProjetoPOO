@@ -7,7 +7,7 @@ Sistema simples de gerenciamento de barbearia desenvolvido em Java utilizando pr
 ## Tecnologias Utilizadas
 
 - ☕ Java
-- 🖥️ Swing
+- 🖥️ JavaFX
 - 🗄️ MySQL
 - 🔌 JDBC
 - 📦 Maven
