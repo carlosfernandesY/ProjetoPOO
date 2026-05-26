@@ -41,11 +41,10 @@ public class AtendimentDAO implements EntidadeDAO<Atendimento> {
             atendimento.setIdAtendimento(resultSet.getInt("idAtendimento"));
             atendimento.setData(resultSet.getDate("data"));
             atendimento.setValorTotal(resultSet.getDouble("valorTotal"));
-
-
-        }catch(SQLException e){}
-
-        return null;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return atendimento;
     }
 
     @Override
@@ -68,6 +67,7 @@ public class AtendimentDAO implements EntidadeDAO<Atendimento> {
             preparedStatement.setDate(1,object.getData());
             preparedStatement.setDouble(2,object.getValorTotal());
             preparedStatement.setInt(3,object.getIdAtendimento());
+            preparedStatement.execute();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
