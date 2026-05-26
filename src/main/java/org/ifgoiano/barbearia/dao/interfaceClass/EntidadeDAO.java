@@ -1,4 +1,4 @@
-package org.ifgoiano.dao.interfaceClass;
+package org.ifgoiano.barbearia.dao.interfaceClass;
 
 
 public interface EntidadeDAO<T> {

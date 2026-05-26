@@ -1,8 +1,8 @@
-package org.ifgoiano.dao;
+package org.ifgoiano.barbearia.dao;
 
-import org.ifgoiano.connection.ConnectionFactory;
-import org.ifgoiano.dao.interfaceClass.EntidadeDAO;
-import org.ifgoiano.model.Atendimento;
+import org.ifgoiano.barbearia.connection.ConnectionFactory;
+import org.ifgoiano.barbearia.dao.interfaceClass.EntidadeDAO;
+import org.ifgoiano.barbearia.model.Atendimento;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

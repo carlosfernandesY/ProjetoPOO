@@ -1,4 +1,4 @@
-package org.ifgoiano.connection;
+package org.ifgoiano.barbearia.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package org.ifgoiano.model;
+package org.ifgoiano.barbearia.model;
 
 import java.sql.Date;
 
