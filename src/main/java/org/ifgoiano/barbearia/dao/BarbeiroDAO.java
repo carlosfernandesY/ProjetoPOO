@@ -1,5 +1,6 @@
 package org.ifgoiano.barbearia.dao;
 
+
 import org.ifgoiano.barbearia.dao.interfaceClass.EntidadeDAO;
 import org.ifgoiano.barbearia.model.Barbeiro;
 
