@@ -15,7 +15,9 @@ Projeto-POO/
 │           │
 │           ├── model/        # Entidades e objetos do domínio do sistema
 │           │
-│           └── dao/          # Operações de acesso e manipulação dos dados 
+│           ├── dao/          # Operações de acesso e manipulação dos dados 
+│           │
+│           └── service/          
 │
 ├── pom.xml
 │
