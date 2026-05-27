@@ -52,16 +52,16 @@ public class BarbeiroDAO implements EntidadeDAO<Barbeiro> {
     }
 
     @Override
-    public boolean deleteById(Barbeiro object) {
+    public void deleteById(Barbeiro object) {
         String sql = "DELETE FROM Barbeiro wHERE idBarbeiro = ?;";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement .setInt(1, object.getIdBarbeiro());
             preparedStatement.execute();
-            return true;
+
         }catch (SQLException e){
             System.out.println(e.getMessage());
-            return false;
+
         }
 
     }

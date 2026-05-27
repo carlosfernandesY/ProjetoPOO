@@ -1,4 +1,4 @@
-
+package org.ifgoiano.barbearia.dao;
 
 import org.ifgoiano.barbearia.connection.ConnectionFactory;
 import org.ifgoiano.barbearia.dao.interfaceClass.EntidadeDAO;
@@ -9,9 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AtendimentDAO implements EntidadeDAO<Atendimento> {
+public class AtendimentoDAO implements EntidadeDAO<Atendimento> {
     Connection connection;
-    public AtendimentDAO(Connection connection) {
+    public AtendimentoDAO( ) {
         this.connection = new ConnectionFactory().getConnection();
     }
     @Override
@@ -48,7 +48,7 @@ return  false;
     }
 
     @Override
-    public boolean deleteById(Atendimento atendimento) {
+    public void deleteById(Atendimento atendimento) {
         String sql = "DELET FROM Atendiente WHERE idAtendimento = ?;";
         try(PreparedStatement preparedStatement = this.connection.prepareStatement(sql)){
             preparedStatement.setInt(1,atendimento.getIdAtendimento());
@@ -56,8 +56,6 @@ return  false;
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-
-        return false;
     }
 
     @Override

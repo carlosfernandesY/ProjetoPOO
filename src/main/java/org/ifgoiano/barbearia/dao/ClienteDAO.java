@@ -49,16 +49,13 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
     }
 
     @Override
-    public boolean deleteById(Cliente object) {
+    public void deleteById(Cliente object) {
         String sql = "DELETE FROM Cliente WHERE idCliente = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, object.getIdCliente());
             preparedStatement.execute();
-            return true;
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
         }
     }
 
