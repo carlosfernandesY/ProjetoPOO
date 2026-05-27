@@ -11,22 +11,41 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClienteTest {
-     @Test
-     @DisplayName("Testa procurar um registro no BD")
-      void readById() {
+
+    @Test
+    @DisplayName("Testa procurar um registro no BD")
+    void readById() {
         int id = 2;
         Cliente cliente = new ClienteService(new ClienteDAO()).read(2);
-        assertEquals(2,cliente.getIdCliente());
-      }
-      @Test
-      void testeCreate(){
-         Cliente  cliente = new Cliente("carlos","carlosroberto6870@gmail.com","99262037");
-         ClienteService clienteService = new ClienteService(new ClienteDAO());
-         clienteService.createCliente(cliente);
-        }
-        //Teste básico para ver se todo CRUD funciona
-//        Cliente cliente = new Cliente("Gui", "guiSteeam@outlook.com", "1234-5678");
-//        ClienteService clienteService = new ClienteService(new ClienteDAO());
-//        clienteService.createCliente(cliente);
+        assertEquals(2, cliente.getIdCliente());
     }
+
+    @Test
+    @DisplayName("Teste se o registro foi adicionado")
+    void create() {
+        Cliente cliente = new Cliente("Renan", "renan@gmail.com", "00000009");
+        ClienteService clienteService = new ClienteService(new ClienteDAO());
+
+    }
+
+    @Test
+    @DisplayName("Teste delete")
+    void delete() {
+        ClienteService clienteService = new ClienteService(new ClienteDAO());
+        Cliente cliente = clienteService.read(7);
+        assertTrue(clienteService.delete(cliente));
+    }
+   @Test
+   @DisplayName("Testa alteração de nome")
+    void update() {
+        ClienteService clienteService = new ClienteService(new ClienteDAO());
+        Cliente cliente = clienteService.read(3);
+        String  novoNome = "RenanJustino";
+        cliente.setNome(novoNome);
+        cliente.setTelefone("1");
+        clienteService.update(cliente);
+        cliente = clienteService.read(3);
+        assertEquals(novoNome, cliente.getNome());
+    }
+}
 

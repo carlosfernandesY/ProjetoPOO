@@ -8,6 +8,5 @@ import org.ifgoiano.barbearia.model.Cliente;
 public class Main {
     static void main() {
 
-
     }
 }

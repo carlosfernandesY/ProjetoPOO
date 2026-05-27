@@ -23,7 +23,7 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
             preparedStatement.setString(1, object.getNome());
             preparedStatement.setString(2, object.getEmail());
             preparedStatement.setString(3, object.getTelefone());
-            return  preparedStatement.execute();
+            return  preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -49,14 +49,15 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
     }
 
     @Override
-    public void deleteById(Cliente object) {
+    public boolean deleteById(Cliente object) {
         String sql = "DELETE FROM Cliente WHERE idCliente = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, object.getIdCliente());
-            preparedStatement.execute();
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     @Override
