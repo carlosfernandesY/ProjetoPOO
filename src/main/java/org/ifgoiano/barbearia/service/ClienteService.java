@@ -12,8 +12,8 @@ public class ClienteService {
     public void createCliente (Cliente cliente){
         this.clienteDAO.create(cliente);
     }
-    public void read(int  idCliente ){
-        this.clienteDAO.readById(idCliente);
+    public Cliente read(int  idCliente ){
+        return this.clienteDAO.readById(idCliente);
     }
     public void update(Cliente cliente){
         this.clienteDAO.updateById(cliente);
