@@ -1,11 +1,19 @@
 package org.ifgoiano.barbearia.dao.interfaceClass;
 
 
+import org.ifgoiano.barbearia.model.Cliente;
+
+import java.util.List;
+
 public interface EntidadeDAO<T> {
+
     boolean create(T object);
+
     T readById(Integer id);
-    void deleteById(T object);
-    void updateById(T object );
 
+    boolean updateById(T object);
 
+    boolean deleteById(T object);
+
+    List<T> readAll();
 }

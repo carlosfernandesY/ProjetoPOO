@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO implements EntidadeDAO<Cliente> {
     Connection connection;
@@ -49,7 +51,7 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
     }
 
     @Override
-    public void deleteById(Cliente object) {
+    public boolean deleteById(Cliente object) {
         String sql = "DELETE FROM Cliente WHERE idCliente = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, object.getIdCliente());
@@ -57,10 +59,11 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     @Override
-    public void updateById(Cliente object) {
+    public boolean updateById(Cliente object) {
         String sql = "UPDATE Cliente SET nome = ?, email = ?, telefone = ? WHERE idCliente = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setString(1, object.getNome());
@@ -72,5 +75,40 @@ public class ClienteDAO implements EntidadeDAO<Cliente> {
             System.out.println(e.getMessage());
         }
 
+        return false;
+    }
+
+    /*
+    ----------------------------------------------------
+    READ ALL
+
+    Busca todos os clientes cadastrados.
+
+    Retorno:
+    - Lista contendo todos os clientes
+    ----------------------------------------------------
+    */
+    @Override
+    public List<Cliente> readAll() {
+        String sql = "SELECT * FROM Cliente;";
+        List<Cliente> clientes = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(resultSet.getInt("idCliente"));
+                cliente.setNome(resultSet.getString("nome"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setTelefone(resultSet.getString("telefone")); // Adicionado o telefone que faltava no readById
+
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar clientes: " + e.getMessage());
+        }
+
+        return clientes;
     }
 }

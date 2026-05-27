@@ -24,5 +24,6 @@ src/
             ├── app/
             ├── connection/
             ├── model/
-            ├── dao/
-            └── service/
+            ├── dao/    
+            ├── service/
+            └── view/
