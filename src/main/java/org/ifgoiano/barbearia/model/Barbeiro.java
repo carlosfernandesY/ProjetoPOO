@@ -24,4 +24,9 @@ public class Barbeiro {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

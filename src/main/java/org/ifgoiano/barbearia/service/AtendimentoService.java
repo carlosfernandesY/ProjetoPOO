@@ -10,20 +10,20 @@ public class AtendimentoService {
         this.atendimentoDAO = atendimentoDAO;
     }
 
-    public void createAtendimento(Atendimento atendimento ){
+    public void createAtendimento(Atendimento atendimento) {
         this.atendimentoDAO.create(atendimento);
     }
-    public void readAtendimento(int idAtendimento ){
+
+    public void readAtendimento(int idAtendimento) {
         this.atendimentoDAO.readById(idAtendimento);
     }
-    public void updateAtendimento(Atendimento atendimento ){
+
+    public void updateAtendimento(Atendimento atendimento) {
         this.atendimentoDAO.updateById(atendimento);
 
     }
-    public void deleteAtendimento(Atendimento atendimento ){
+
+    public void deleteAtendimento(Atendimento atendimento) {
         this.atendimentoDAO.deleteById(atendimento);
     }
-
-
-
 }

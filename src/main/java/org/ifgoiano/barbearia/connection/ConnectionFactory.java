@@ -4,20 +4,39 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * ========================================================
+ * CLASSE: ConnectionFactory
+ * RESPONSABILIDADE: Gerenciar conexões com o banco.
+ * ========================================================
+ */
 public class ConnectionFactory {
-  Connection connection;
-  private final static String url  = "jdbc:mysql://localhost:3306/barbearia";
-  private final static String username = "fernandes";
-  private final static String password= "password";
 
-  public Connection getConnection(){
-      try{
-          return DriverManager.getConnection(url,username,password);
-      }catch(SQLException e){
-          System.out.println("Erro ao se connectar");
-          System.out.println(e.getMessage());
-      }
-      return null;
-  }
+    private static final String URL =
+            "jdbc:mysql://100.82.195.21:3306/barbearia";
+
+    private static final String USER =
+            "araujo";
+
+    private static final String PASSWORD =
+            "321";
+
+    public Connection getConnection() {
+
+        try {
+
+            return DriverManager.getConnection(
+                    URL,
+                    USER,
+                    PASSWORD
+            );
+
+        } catch (SQLException e) {
+
+            System.out.println("Erro ao conectar no banco");
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 }
-

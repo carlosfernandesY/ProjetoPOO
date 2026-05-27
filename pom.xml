@@ -7,8 +7,39 @@
     <groupId>org.ifgoiano</groupId>
     <artifactId>Barbearia</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>26</maven.compiler.source>
+        <maven.compiler.target>26</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>21.0.2</javafx.version>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
     <dependencies>
-        <!-- Source: https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+
+        <!-- Ikonli Core -->
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-core</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+
+        <!-- JavaFX -->
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+
+        <!-- FontAwesome -->
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-fontawesome5-pack</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+
+        <!-- Permite que aplicações Java se conectem e interajam com bancos de dados MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -16,27 +47,52 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Cria a parte visual do sistema, fornecendo componentes como botões, tabelas e campos de texto -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
 
-            <!-- Dependência do JUnit 5 (JUnit Jupiter) -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
-                <version>5.10.2</version>
-                <scope>test</scope>
-            </dependency>
+        <!-- Permite desenhar e carregar as telas do sistema usando arquivos XML separados (.fxml) -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- Reúne as ferramentas necessárias para rodar testes automatizados no código -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Fornece as regras e anotações básicas (como @Test) para escrever os testes do sistema -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.2</version>
-            <scope>compile</scope>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
 
-
     </dependencies>
-    <properties>
-        <maven.compiler.source>26</maven.compiler.source>
-        <maven.compiler.target>26</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+
+    <build>
+        <plugins>
+
+            <!-- Permite que você execute o projeto visual na sua máquina com um único clique ou comando -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>org.ifgoiano.barbearia.view.main.MainView</mainClass>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
