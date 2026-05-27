@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ee81f651-3b59-4832-9eba-d1d1216ca004" name="Changes" comment="restore: Implementação BarbeiroDAO.java">
+      <change afterPath="$PROJECT_DIR$/docs/interface.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/atendimento/AtendimentoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/atendimento/AtendimentoView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/barbeiro/BarbeiroController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/barbeiro/BarbeiroView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/cliente/ClienteController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/cliente/ClienteView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/components/AlertComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/view/main/MainView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/struture.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/struture.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/connection/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/connection/ConnectionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/AtendimentoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/AtendimentoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/BarbeiroDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/BarbeiroDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/ClienteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/ClienteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/interfaceClass/EntidadeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/dao/interfaceClass/EntidadeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/model/Barbeiro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/model/Barbeiro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/model/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/service/AtendimentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ifgoiano/barbearia/service/AtendimentoService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="45" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;viniciusfga&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/carlosfernandesY/ProjetoPOO&quot;,
+    &quot;accountId&quot;: &quot;eff16185-d29b-4067-b78b-d52af2d01a1d&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EEnGOzzwgZXUGW8qNHSuUiNISe" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.MainView.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "ml.llm.AcpAgentsConfigurable",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ifmaker04\IdeaProjects\ProjetoPOO\src\main\resources" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee81f651-3b59-4832-9eba-d1d1216ca004" name="Changes" comment="" />
+      <created>1779752500970</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779752500970</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1779756554072</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779756554072</updated>
+    </task>
+    <task id="LOCAL-00002" summary="restore: Implementação BarbeiroDAO.java">
+      <option name="closed" value="true" />
+      <created>1779756795576</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779756795576</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <MESSAGE value="restore: Implementação BarbeiroDAO.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="restore: Implementação BarbeiroDAO.java" />
+  </component>
+</project>
