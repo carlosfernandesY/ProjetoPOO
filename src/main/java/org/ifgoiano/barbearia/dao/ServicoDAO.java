@@ -20,12 +20,12 @@ public class ServicoDAO implements EntidadeDAO<Servico> {
     }
 
     @Override
-    public boolean create(Servico object) {
-        String sql = "INSERT INTO Servicos (nome,preco,descricao) VALUES(?,?,?);";
+    public boolean create(Servico servico) {
+        String sql = "INSERT INTO Servico (nome,preco,descricao) VALUES(?,?,?);";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, object.getNome());
-            preparedStatement.setDouble(2, object.getPreco());
-            preparedStatement.setString(3, object.getDescricao());
+            preparedStatement.setString(1, servico.getNome());
+            preparedStatement.setDouble(2, servico.getPreco());
+            preparedStatement.setString(3, servico.getDescricao());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -36,7 +36,7 @@ public class ServicoDAO implements EntidadeDAO<Servico> {
 
     @Override
     public Servico readById(Integer id) {
-        String sql = "SELECT * FROM Servicos WHERE idServico = ?;";
+        String sql = "SELECT * FROM Servico WHERE idServico = ?;";
         Servico servico = new Servico();
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
@@ -54,13 +54,13 @@ public class ServicoDAO implements EntidadeDAO<Servico> {
     }
 
     @Override
-    public boolean updateById(Servico object) {
+    public boolean updateById(Servico servico) {
         String sql = "UPDATE Servico SET nome = ?, preco = ?, descricao = ? WHERE idServico = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, object.getNome());
-            preparedStatement.setDouble(2, object.getPreco());
-            preparedStatement.setString(3, object.getDescricao());
-            preparedStatement.setInt(4, object.getIdServico());
+            preparedStatement.setString(1, servico.getNome());
+            preparedStatement.setDouble(2, servico.getPreco());
+            preparedStatement.setString(3, servico.getDescricao());
+            preparedStatement.setInt(4, servico.getIdServico());
             return preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,10 +69,10 @@ public class ServicoDAO implements EntidadeDAO<Servico> {
     }
 
     @Override
-    public boolean deleteById(Servico object) {
+    public boolean deleteById(Servico servico) {
         String sql = "DELETE FROM Servico WHERE idServico = ?;";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, object.getIdServico());
+            preparedStatement.setInt(1, servico.getIdServico());
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
