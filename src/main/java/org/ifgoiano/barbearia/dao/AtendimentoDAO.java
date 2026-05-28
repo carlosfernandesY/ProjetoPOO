@@ -39,7 +39,7 @@ public class AtendimentoDAO implements EntidadeDAO<Atendimento> {
   */
     @Override
     public boolean create(Atendimento object) {
-        String sql = "INSERT INTO Atendimento(idClienteFK,idBarbeiroFK,data,valorTotal) VALUES(?, ?, ?, ?);";
+        String sql = "INSERT INTO Atendimento(idClienteFK2,idBarbeiroFK,data,valorTotal) VALUES(?, ?, ?, ?);";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, object.getCliente().getIdCliente());
             preparedStatement.setInt(2, object.getBarbeiro().getIdBarbeiro());

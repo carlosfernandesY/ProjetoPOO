@@ -14,7 +14,7 @@ public class AtendimentoService {
         this.atendimentoDAO = atendimentoDAO;
     }
 
-    public void createAtendimento(Atendimento atendimento) {
+    public boolean createAtendimento(Atendimento atendimento) {
         if (atendimento == null) {
             throw new IllegalArgumentException("O atendimento não pode ser nulo.");
         }
@@ -30,7 +30,7 @@ public class AtendimentoService {
             throw new IllegalArgumentException("A data e hora do atendimento são obrigatórias.");
         }
 
-        this.atendimentoDAO.create(atendimento);
+        return this.atendimentoDAO.create(atendimento);
     }
 
     public Atendimento readAtendimento(int idAtendimento) {

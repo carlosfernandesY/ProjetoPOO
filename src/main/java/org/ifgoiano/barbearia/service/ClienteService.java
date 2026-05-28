@@ -20,9 +20,7 @@ public class ClienteService {
         if (cliente.getNome() == null || cliente.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do cliente é obrigatório para o cadastro.");
         }
-        if (cliente.getTelefone() == null || cliente.getTelefone().length() < 8) {
-            throw new IllegalArgumentException("Informe um número de telefone válido.");
-        }
+
         return this.clienteDAO.create(cliente);
     }
 

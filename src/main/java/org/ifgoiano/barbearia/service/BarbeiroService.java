@@ -12,14 +12,14 @@ public class BarbeiroService {
         this.barbeiroDAO = barbeiroDAO;
     }
 
-    public void createBarbeiro(Barbeiro barbeiro) {
+    public boolean createBarbeiro(Barbeiro barbeiro) {
         if (barbeiro == null) {
             throw new IllegalArgumentException("O barbeiro não pode ser nulo.");
         }
         if (barbeiro.getNome() == null || barbeiro.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do barbeiro é obrigatório.");
         }
-        this.barbeiroDAO.create(barbeiro);
+        return this.barbeiroDAO.create(barbeiro);
     }
 
     public Barbeiro readBarbeiro(int idBarbeiro) {

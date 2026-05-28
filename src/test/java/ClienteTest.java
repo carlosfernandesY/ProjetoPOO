@@ -25,7 +25,7 @@ class ClienteTest {
     @Test
     @DisplayName("Teste se o registro foi adicionado")
     void create() {
-        Cliente cliente = new Cliente("Teste", "renan@gmail.com", "00000009");
+        Cliente cliente = new Cliente("Teste", "renan@gmail.com", "64992626037");
         Cliente erro = new Cliente();
         erro.setNome("erro");
         ClienteService clienteService = new ClienteService(new ClienteDAO());
@@ -36,8 +36,8 @@ class ClienteTest {
     @Test
     @DisplayName("Teste delete")
     void delete() {
-        Cliente cliente = new ClienteService(new ClienteDAO()).read(11);
-        Cliente clienteErro = new ClienteService(new ClienteDAO()).read(20);
+        Cliente cliente = new ClienteService(new ClienteDAO()).read(10);
+        Cliente clienteErro = new ClienteService(new ClienteDAO()).read(4);
         ClienteService clienteService = new ClienteService(new ClienteDAO());
         assertTrue(clienteService.delete(cliente));
         assertNull(clienteErro);
