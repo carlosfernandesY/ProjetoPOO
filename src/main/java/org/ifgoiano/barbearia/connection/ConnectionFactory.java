@@ -17,7 +17,6 @@ public class ConnectionFactory {
     private static final String PASSWORD = "";
 
     public Connection getConnection() {
-
         try {
 
             return DriverManager.getConnection(
