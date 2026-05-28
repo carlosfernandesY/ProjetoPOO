@@ -1,7 +1,7 @@
 package org.ifgoiano.barbearia.model;
 
 public class Servico {
-    private String idServico;
+    private Integer idServico;
     private String nome;
     private String descricao;
     private Double preco;
@@ -12,11 +12,11 @@ public class Servico {
         this.descricao = descricao;
         this.preco = preco;
     }
-    public String getIdServico() {
+    public Integer getIdServico() {
         return idServico;
     }
 
-    public void setIdServico(String idServico) {
+    public void setIdServico(Integer idServico) {
         this.idServico = idServico;
     }
 
