@@ -4,58 +4,34 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
 import org.ifgoiano.barbearia.dao.BarbeiroDAO;
+import org.ifgoiano.barbearia.service.BarbeiroService;
 import org.ifgoiano.barbearia.model.Barbeiro;
 import org.ifgoiano.barbearia.view.components.AlertComponent;
 
 public class BarbeiroController {
 
-    private final BarbeiroDAO barbeiroDAO =
-            new BarbeiroDAO();
+    private final BarbeiroService barbeiroService = new BarbeiroService(new BarbeiroDAO());
 
-    public void salvar(
-            String nome,
-            TableView<Barbeiro> tabela
-    ) {
-
+    public void salvar(String nome, TableView<Barbeiro> tabela) {
         try {
-
             Barbeiro barbeiro = new Barbeiro();
-
             barbeiro.setNome(nome);
+            barbeiroService.createBarbeiro(barbeiro);
 
-            boolean sucesso =
-                    barbeiroDAO.create(barbeiro);
+            atualizarTabela(tabela);
+            AlertComponent.sucesso("Barbeiro salvo com sucesso.");
 
-            if (sucesso) {
-
-                atualizarTabela(tabela);
-
-                AlertComponent.sucesso(
-                        "Barbeiro salvo com sucesso."
-                );
-
-            } else {
-
-                AlertComponent.erro(
-                        "Falha ao salvar barbeiro."
-                );
-            }
-
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            AlertComponent.aviso(e.getMessage());
         } catch (Exception e) {
-
-            AlertComponent.erro(
-                    "Erro ao salvar barbeiro."
-            );
+            AlertComponent.erro("Falha ao salvar barbeiro no banco de dados.");
         }
     }
 
-    public void atualizarTabela(
-            TableView<Barbeiro> tabela
-    ) {
-
+    public void atualizarTabela(TableView<Barbeiro> tabela) {
         tabela.setItems(
                 FXCollections.observableArrayList(
-                        barbeiroDAO.readAll()
+                        barbeiroService.readAllBarbeiro()
                 )
         );
     }

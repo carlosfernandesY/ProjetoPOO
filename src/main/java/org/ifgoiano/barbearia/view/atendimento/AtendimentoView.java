@@ -17,22 +17,24 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 public class AtendimentoView extends VBox {
 
-
     private final TableView<Atendimento> tabela = new TableView<>();
     private final ComboBox<Cliente> clienteBox = new ComboBox<>();
     private final ComboBox<Barbeiro> barbeiroBox = new ComboBox<>();
     private final TextField valorField = new TextField();
     private final DatePicker dataPicker = new DatePicker();
     private final Button salvarButton = new Button("Salvar Atendimento");
+    
     private final ClienteService clienteService;
     private final BarbeiroService barbeiroService;
     private final AtendimentoService atendimentoService;
+    
     private Atendimento atendimentoEmEdicao = null;
 
     public AtendimentoView(ClienteService clienteService, BarbeiroService barbeiroService, AtendimentoService atendimentoService) {
         this.clienteService = clienteService;
         this.barbeiroService = barbeiroService;
         this.atendimentoService = atendimentoService;
+        
         this.setSpacing(20);
         this.setPadding(new Insets(36, 40, 36, 40));
         this.getStyleClass().add("content-area");
@@ -52,7 +54,7 @@ public class AtendimentoView extends VBox {
         HBox layoutPrincipal = new HBox(30);
         HBox.setHgrow(tabela, Priority.ALWAYS);
 
-        // FORMULÁRIO LATERAL DIREITO
+      
         VBox painelFormulario = new VBox(15);
         painelFormulario.getStyleClass().add("form-panel");
         painelFormulario.setPrefWidth(300);
@@ -78,7 +80,7 @@ public class AtendimentoView extends VBox {
 
         painelFormulario.getChildren().addAll(formTitle, clienteBox, barbeiroBox, valorField, dataPicker, salvarButton);
 
-        // CONFIGURAÇÃO DA TABELA ESQUERDA
+        
         TableColumn<Atendimento, Integer> idColuna = new TableColumn<>("ID");
         idColuna.setCellValueFactory(new PropertyValueFactory<>("idAtendimento"));
         idColuna.setPrefWidth(50);
@@ -117,20 +119,16 @@ public class AtendimentoView extends VBox {
             }
         });
 
-        // COLUNA EDITAR
+       
         TableColumn<Atendimento, Void> colEditar = new TableColumn<>("Editar");
         colEditar.setPrefWidth(65);
         colEditar.setStyle("-fx-alignment: CENTER;");
         colEditar.setCellFactory(param -> new TableCell<>() {
-
             private final Button btn = new Button();
-
             {
                 btn.getStyleClass().add("btn-acao-tabela");
-
                 FontIcon icone = new FontIcon("fas-edit");
                 icone.getStyleClass().add("icon-editar");
-
                 btn.setGraphic(icone);
                 btn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
@@ -156,20 +154,16 @@ public class AtendimentoView extends VBox {
             }
         });
 
-        // COLUNA EXCLUIR
+       
         TableColumn<Atendimento, Void> colExcluir = new TableColumn<>("Excluir");
         colExcluir.setPrefWidth(70);
         colExcluir.setStyle("-fx-alignment: CENTER;");
         colExcluir.setCellFactory(param -> new TableCell<>() {
-
             private final Button btn = new Button();
-
             {
                 btn.getStyleClass().add("btn-acao-tabela");
-
                 FontIcon icone = new FontIcon("fas-trash");
                 icone.getStyleClass().add("icon-excluir");
-
                 btn.setGraphic(icone);
                 btn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
@@ -187,10 +181,17 @@ public class AtendimentoView extends VBox {
 
                     confirmacao.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
-                           atendimentoService.deleteAtendimento(atendimento);
-                            atualizarTabela();
-                            limparFormulario();
-                            AlertComponent.sucesso("Atendimento removido com sucesso.");
+                            try {
+                               
+                                atendimentoService.deleteAtendimento(atendimento);
+                                atualizarTabela();
+                                limparFormulario();
+                                AlertComponent.sucesso("Atendimento removido com sucesso.");
+                            } catch (IllegalArgumentException | IllegalStateException e) {
+                                AlertComponent.aviso(e.getMessage());
+                            } catch (Exception e) {
+                                AlertComponent.erro("Erro inesperado ao excluir atendimento.");
+                            }
                         }
                     });
                 });
@@ -203,34 +204,32 @@ public class AtendimentoView extends VBox {
             }
         });
 
-        // EVENTO SALVAR / ATUALIZAR
+        
         salvarButton.setOnAction(e -> {
             try {
-                if (clienteBox.getValue() == null
-                        || barbeiroBox.getValue() == null
-                        || valorField.getText().trim().isEmpty()
-                        || dataPicker.getValue() == null) {
-
-                    AlertComponent.aviso("Preencha todos os campos.");
-                    return;
+                
+                double valor = 0.0;
+                if (!valorField.getText().trim().isEmpty()) {
+                    valor = Double.parseDouble(valorField.getText().replace(",", "."));
                 }
-
-                double valor = Double.parseDouble(valorField.getText().replace(",", "."));
+                
+                Date dataSql = (dataPicker.getValue() != null) ? Date.valueOf(dataPicker.getValue()) : null;
 
                 if (atendimentoEmEdicao == null) {
                     Atendimento atendimento = new Atendimento();
                     atendimento.setCliente(clienteBox.getValue());
                     atendimento.setBarbeiro(barbeiroBox.getValue());
                     atendimento.setValorTotal(valor);
-                    atendimento.setData(Date.valueOf(dataPicker.getValue()));
+                    atendimento.setData(dataSql);
 
-                    atendimentoService.createAtendimento((atendimento));
-                    AlertComponent.sucesso("Atendimento saved com sucesso.");
+                    
+                    atendimentoService.createAtendimento(atendimento);
+                    AlertComponent.sucesso("Atendimento salvo com sucesso.");
                 } else {
                     atendimentoEmEdicao.setCliente(clienteBox.getValue());
                     atendimentoEmEdicao.setBarbeiro(barbeiroBox.getValue());
                     atendimentoEmEdicao.setValorTotal(valor);
-                    atendimentoEmEdicao.setData(Date.valueOf(dataPicker.getValue()));
+                    atendimentoEmEdicao.setData(dataSql);
 
                     atendimentoService.updateAtendimento(atendimentoEmEdicao);
                     AlertComponent.sucesso("Atendimento atualizado com sucesso.");
@@ -240,7 +239,11 @@ public class AtendimentoView extends VBox {
                 limparFormulario();
 
             } catch (NumberFormatException ex) {
-                AlertComponent.erro("Valor inválido.");
+                
+                AlertComponent.aviso("Valor inválido. Utilize apenas números e vírgula.");
+            } catch (IllegalArgumentException | IllegalStateException ex) {
+                
+                AlertComponent.aviso(ex.getMessage());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 AlertComponent.erro("Erro ao salvar atendimento.");

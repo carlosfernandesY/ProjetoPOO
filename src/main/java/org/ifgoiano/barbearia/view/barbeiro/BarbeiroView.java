@@ -6,13 +6,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import org.ifgoiano.barbearia.dao.BarbeiroDAO;
+import org.ifgoiano.barbearia.service.BarbeiroService;
 import org.ifgoiano.barbearia.model.Barbeiro;
 import org.ifgoiano.barbearia.view.components.AlertComponent;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class BarbeiroView extends VBox {
 
-    private final BarbeiroDAO barbeiroDAO = new BarbeiroDAO();
+    private final BarbeiroService barbeiroService = new BarbeiroService(new BarbeiroDAO());
     private final TableView<Barbeiro> tabela = new TableView<>();
 
     private final TextField nomeField = new TextField();
@@ -25,7 +26,6 @@ public class BarbeiroView extends VBox {
         this.setPadding(new Insets(36, 40, 36, 40));
         this.getStyleClass().add("content-area");
 
-        // CABEÇALHO DA SEÇÃO
         VBox headerBox = new VBox(4);
         Label tituloSecao = new Label("Gerenciamento de Barbeiros");
         tituloSecao.getStyleClass().add("page-title");
@@ -40,7 +40,6 @@ public class BarbeiroView extends VBox {
         HBox layoutPrincipal = new HBox(30);
         HBox.setHgrow(tabela, Priority.ALWAYS);
 
-        // FORMULÁRIO LATERAL DIREITO
         VBox painelFormulario = new VBox(15);
         painelFormulario.getStyleClass().add("form-panel");
         painelFormulario.setPrefWidth(300);
@@ -56,7 +55,6 @@ public class BarbeiroView extends VBox {
 
         painelFormulario.getChildren().addAll(formTitle, nomeField, salvarButton);
 
-        // TABELA ESQUERDA
         TableColumn<Barbeiro, Integer> idColuna = new TableColumn<>("ID");
         idColuna.setCellValueFactory(new PropertyValueFactory<>("idBarbeiroFK"));
         idColuna.setPrefWidth(80);
@@ -65,7 +63,6 @@ public class BarbeiroView extends VBox {
         TableColumn<Barbeiro, String> nomeColuna = new TableColumn<>("Nome do Profissional");
         nomeColuna.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
-        // COLUNA EDITAR
         TableColumn<Barbeiro, Void> colEditar = new TableColumn<>("Editar");
         colEditar.setPrefWidth(70);
         colEditar.setStyle("-fx-alignment: CENTER;");
@@ -76,9 +73,8 @@ public class BarbeiroView extends VBox {
             {
                 btn.getStyleClass().add("btn-acao-tabela");
 
-                // Configuração do FontIcon de Edição
                 FontIcon icone = new FontIcon("fas-edit");
-                icone.getStyleClass().add("icon-editar"); // Aplica a cor do CSS
+                icone.getStyleClass().add("icon-editar");
 
                 btn.setGraphic(icone);
                 btn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -98,7 +94,6 @@ public class BarbeiroView extends VBox {
             }
         });
 
-        // COLUNA EXCLUIR
         TableColumn<Barbeiro, Void> colExcluir = new TableColumn<>("Excluir");
         colExcluir.setPrefWidth(70);
         colExcluir.setStyle("-fx-alignment: CENTER;");
@@ -109,9 +104,8 @@ public class BarbeiroView extends VBox {
             {
                 btn.getStyleClass().add("btn-acao-tabela");
 
-                // Configuração do FontIcon de Exclusão (Substituindo a antiga Region)
                 FontIcon icone = new FontIcon("fas-trash-alt");
-                icone.getStyleClass().add("icon-excluir"); // Aplica a cor do CSS
+                icone.getStyleClass().add("icon-excluir");
 
                 btn.setGraphic(icone);
                 btn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -129,10 +123,16 @@ public class BarbeiroView extends VBox {
 
                     confirmacao.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
-                            barbeiroDAO.deleteById(barbeiro);
-                            atualizarTabela();
-                            limparFormulario();
-                            AlertComponent.sucesso("Profissional removido do sistema.");
+                            try {
+                                barbeiroService.deleteBarbeiro(barbeiro);
+                                atualizarTabela();
+                                limparFormulario();
+                                AlertComponent.sucesso("Profissional removido do sistema.");
+                            } catch (IllegalArgumentException | IllegalStateException e) {
+                                AlertComponent.aviso(e.getMessage());
+                            } catch (Exception e) {
+                                AlertComponent.erro("Erro inesperado ao excluir profissional.");
+                            }
                         }
                     });
                 });
@@ -151,25 +151,28 @@ public class BarbeiroView extends VBox {
 
         // SALVAR / ATUALIZAR
         salvarButton.setOnAction(e -> {
-            String nome = nomeField.getText().trim();
-            if (nome.isEmpty()) {
-                AlertComponent.aviso("O nome do barbeiro é obrigatório.");
-                return;
-            }
+            try {
+                String nome = nomeField.getText().trim();
 
-            if (barbeiroEmEdicao == null) {
-                Barbeiro b = new Barbeiro();
-                b.setNome(nome);
-                barbeiroDAO.create(b);
-                AlertComponent.sucesso("Barbeiro cadastrado com sucesso.");
-            } else {
-                barbeiroEmEdicao.setNome(nome);
-                barbeiroDAO.updateById(barbeiroEmEdicao);
-                AlertComponent.sucesso("Cadastro do barbeiro atualizado.");
-            }
+                if (barbeiroEmEdicao == null) {
+                    Barbeiro b = new Barbeiro();
+                    b.setNome(nome);
+                    barbeiroService.createBarbeiro(b);
+                    AlertComponent.sucesso("Barbeiro cadastrado com sucesso.");
+                } else {
+                    barbeiroEmEdicao.setNome(nome);
+                    barbeiroService.updateBarbeiro(barbeiroEmEdicao);
+                    AlertComponent.sucesso("Cadastro do barbeiro atualizado.");
+                }
 
-            atualizarTabela();
-            limparFormulario();
+                atualizarTabela();
+                limparFormulario();
+
+            } catch (IllegalArgumentException ex) {
+                AlertComponent.aviso(ex.getMessage());
+            } catch (Exception ex) {
+                AlertComponent.erro("Erro ao processar o formulário do barbeiro.");
+            }
         });
 
         atualizarTabela();
@@ -179,7 +182,7 @@ public class BarbeiroView extends VBox {
     }
 
     private void atualizarTabela() {
-        tabela.setItems(FXCollections.observableArrayList(barbeiroDAO.readAll()));
+        tabela.setItems(FXCollections.observableArrayList(barbeiroService.readAllBarbeiro()));
     }
 
     private void limparFormulario() {

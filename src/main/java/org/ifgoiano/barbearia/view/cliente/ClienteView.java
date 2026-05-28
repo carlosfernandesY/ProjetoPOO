@@ -13,7 +13,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 public class ClienteView extends VBox {
 
-    private  final ClienteService  clienteService = new ClienteService(new ClienteDAO());
+    private final ClienteService clienteService = new ClienteService(new ClienteDAO());
     private final TableView<Cliente> tabela = new TableView<>();
 
     private final TextField nomeField = new TextField();
@@ -28,7 +28,6 @@ public class ClienteView extends VBox {
         this.setPadding(new Insets(36, 40, 36, 40));
         this.getStyleClass().add("content-area");
 
-        // CABEÇALHO DA SEÇÃO
         VBox headerBox = new VBox(4);
         Label tituloSecao = new Label("Gerenciamento de Clientes");
         tituloSecao.getStyleClass().add("page-title");
@@ -43,7 +42,6 @@ public class ClienteView extends VBox {
         HBox layoutPrincipal = new HBox(30);
         HBox.setHgrow(tabela, Priority.ALWAYS);
 
-        // FORMULÁRIO LATERAL DIREITO
         VBox painelFormulario = new VBox(15);
         painelFormulario.getStyleClass().add("form-panel");
         painelFormulario.setPrefWidth(300);
@@ -56,7 +54,6 @@ public class ClienteView extends VBox {
         telefoneField.setPromptText("(00) 00000-0000");
         emailField.setPromptText("E-mail");
 
-        // APLICAÇÃO DE MÁSCARA COMPLETA NO TELEFONE
         telefoneField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
 
@@ -90,7 +87,6 @@ public class ClienteView extends VBox {
 
         painelFormulario.getChildren().addAll(formTitle, nomeField, telefoneField, emailField, salvarButton);
 
-        // TABELA ESQUERDA
         TableColumn<Cliente, Integer> idColuna = new TableColumn<>("ID");
         idColuna.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
         idColuna.setPrefWidth(60);
@@ -104,7 +100,6 @@ public class ClienteView extends VBox {
         TableColumn<Cliente, String> emailColuna = new TableColumn<>("E-mail");
         emailColuna.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        // COLUNA EDITAR
         TableColumn<Cliente, Void> colEditar = new TableColumn<>("Editar");
         colEditar.setPrefWidth(70);
         colEditar.setStyle("-fx-alignment: CENTER;");
@@ -139,7 +134,6 @@ public class ClienteView extends VBox {
             }
         });
 
-        // COLUNA EXCLUIR
         TableColumn<Cliente, Void> colExcluir = new TableColumn<>("Excluir");
         colExcluir.setPrefWidth(70);
         colExcluir.setStyle("-fx-alignment: CENTER;");
@@ -170,10 +164,16 @@ public class ClienteView extends VBox {
 
                     confirmacao.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
-                            clienteService.delete(cliente);
-                            atualizarTabela();
-                            limparFormulario();
-                            AlertComponent.sucesso("Cliente excluído com sucesso.");
+                            try {
+                                clienteService.delete(cliente);
+                                atualizarTabela();
+                                limparFormulario();
+                                AlertComponent.sucesso("Cliente excluído com sucesso.");
+                            } catch (IllegalArgumentException | IllegalStateException e) {
+                                AlertComponent.aviso(e.getMessage());
+                            } catch (Exception e) {
+                                AlertComponent.erro("Erro inesperado ao excluir cliente.");
+                            }
                         }
                     });
                 });
@@ -190,34 +190,37 @@ public class ClienteView extends VBox {
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabela.setPlaceholder(new Label("Nenhum cliente cadastrado."));
 
-        // LÓGICA UNIFICADA DE SALVAR OU ALTERAR
         salvarButton.setOnAction(e -> {
-            String nome = nomeField.getText().trim();
-            String telefone = telefoneField.getText().trim();
-            String email = emailField.getText().trim();
+            try {
+                String nome = nomeField.getText().trim();
+                String telefone = telefoneField.getText().trim();
+                String email = emailField.getText().trim();
 
-            if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-                AlertComponent.aviso("Todos os campos (Nome, Telefone e E-mail) são obrigatórios.");
-                return;
+                if (clienteEmEdicao == null) {
+                    Cliente novoCliente = new Cliente();
+                    novoCliente.setNome(nome);
+                    novoCliente.setTelefone(telefone);
+                    novoCliente.setEmail(email);
+                    
+                    clienteService.createCliente(novoCliente);
+                    AlertComponent.sucesso("Cliente cadastrado com sucesso.");
+                } else {
+                    clienteEmEdicao.setNome(nome);
+                    clienteEmEdicao.setTelefone(telefone);
+                    clienteEmEdicao.setEmail(email);
+                    
+                    clienteService.update(clienteEmEdicao);
+                    AlertComponent.sucesso("Cliente atualizado com sucesso.");
+                }
+
+                atualizarTabela();
+                limparFormulario();
+
+            } catch (IllegalArgumentException ex) {
+                AlertComponent.aviso(ex.getMessage());
+            } catch (Exception ex) {
+                AlertComponent.erro("Erro ao processar o formulário do cliente.");
             }
-
-            if (clienteEmEdicao == null) {
-                Cliente novoCliente = new Cliente();
-                novoCliente.setNome(nome);
-                novoCliente.setTelefone(telefone);
-                novoCliente.setEmail(email);
-                clienteService.createCliente(novoCliente);
-                AlertComponent.sucesso("Cliente cadastrado com sucesso.");
-            } else {
-                clienteEmEdicao.setNome(nome);
-                clienteEmEdicao.setTelefone(telefone);
-                clienteEmEdicao.setEmail(email);
-                clienteService.update(clienteEmEdicao);
-                AlertComponent.sucesso("Cliente atualizado com sucesso.");
-            }
-
-            atualizarTabela();
-            limparFormulario();
         });
 
         atualizarTabela();

@@ -26,9 +26,7 @@ public class AtendimentoService {
         if (atendimento.getBarbeiro() == null || atendimento.getBarbeiro().getIdBarbeiro() <= 0) {
             throw new IllegalArgumentException("É obrigatório selecionar um barbeiro para o atendimento.");
         }
-        if (atendimento.getData() == null) {
-            throw new IllegalArgumentException("A data e hora do atendimento são obrigatórias.");
-        }
+        
 
         return this.atendimentoDAO.create(atendimento);
     }
