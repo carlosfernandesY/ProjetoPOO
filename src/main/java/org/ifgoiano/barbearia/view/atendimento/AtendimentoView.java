@@ -5,32 +5,34 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import org.ifgoiano.barbearia.dao.AtendimentoDAO;
-import org.ifgoiano.barbearia.dao.BarbeiroDAO;
-import org.ifgoiano.barbearia.dao.ClienteDAO;
 import org.ifgoiano.barbearia.model.Atendimento;
 import org.ifgoiano.barbearia.model.Barbeiro;
 import org.ifgoiano.barbearia.model.Cliente;
+import org.ifgoiano.barbearia.service.AtendimentoService;
+import org.ifgoiano.barbearia.service.BarbeiroService;
+import org.ifgoiano.barbearia.service.ClienteService;
 import org.ifgoiano.barbearia.view.components.AlertComponent;
 import java.sql.Date;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class AtendimentoView extends VBox {
 
-    private final AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
-    private final ClienteDAO clienteDAO = new ClienteDAO();
-    private final BarbeiroDAO barbeiroDAO = new BarbeiroDAO();
-    private final TableView<Atendimento> tabela = new TableView<>();
 
+    private final TableView<Atendimento> tabela = new TableView<>();
     private final ComboBox<Cliente> clienteBox = new ComboBox<>();
     private final ComboBox<Barbeiro> barbeiroBox = new ComboBox<>();
     private final TextField valorField = new TextField();
     private final DatePicker dataPicker = new DatePicker();
     private final Button salvarButton = new Button("Salvar Atendimento");
-
+    private final ClienteService clienteService;
+    private final BarbeiroService barbeiroService;
+    private final AtendimentoService atendimentoService;
     private Atendimento atendimentoEmEdicao = null;
 
-    public AtendimentoView() {
+    public AtendimentoView(ClienteService clienteService, BarbeiroService barbeiroService, AtendimentoService atendimentoService) {
+        this.clienteService = clienteService;
+        this.barbeiroService = barbeiroService;
+        this.atendimentoService = atendimentoService;
         this.setSpacing(20);
         this.setPadding(new Insets(36, 40, 36, 40));
         this.getStyleClass().add("content-area");
@@ -61,11 +63,11 @@ public class AtendimentoView extends VBox {
 
         clienteBox.setPromptText("Selecione o Cliente");
         clienteBox.setMaxWidth(Double.MAX_VALUE);
-        clienteBox.setItems(FXCollections.observableArrayList(clienteDAO.readAll()));
+        clienteBox.setItems(FXCollections.observableArrayList(clienteService.readAllCliente()));
 
         barbeiroBox.setPromptText("Selecione o Barbeiro");
         barbeiroBox.setMaxWidth(Double.MAX_VALUE);
-        barbeiroBox.setItems(FXCollections.observableArrayList(barbeiroDAO.readAll()));
+        barbeiroBox.setItems(FXCollections.observableArrayList(barbeiroService.readAllBarbeiro()));
 
         valorField.setPromptText("Valor Total (R$)");
         dataPicker.setPromptText("Data do Atendimento");
@@ -185,7 +187,7 @@ public class AtendimentoView extends VBox {
 
                     confirmacao.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
-                            atendimentoDAO.deleteById(atendimento);
+                           atendimentoService.deleteAtendimento(atendimento);
                             atualizarTabela();
                             limparFormulario();
                             AlertComponent.sucesso("Atendimento removido com sucesso.");
@@ -222,7 +224,7 @@ public class AtendimentoView extends VBox {
                     atendimento.setValorTotal(valor);
                     atendimento.setData(Date.valueOf(dataPicker.getValue()));
 
-                    atendimentoDAO.create(atendimento);
+                    atendimentoService.createAtendimento((atendimento));
                     AlertComponent.sucesso("Atendimento saved com sucesso.");
                 } else {
                     atendimentoEmEdicao.setCliente(clienteBox.getValue());
@@ -230,7 +232,7 @@ public class AtendimentoView extends VBox {
                     atendimentoEmEdicao.setValorTotal(valor);
                     atendimentoEmEdicao.setData(Date.valueOf(dataPicker.getValue()));
 
-                    atendimentoDAO.updateById(atendimentoEmEdicao);
+                    atendimentoService.updateAtendimento(atendimentoEmEdicao);
                     AlertComponent.sucesso("Atendimento atualizado com sucesso.");
                 }
 
@@ -256,7 +258,7 @@ public class AtendimentoView extends VBox {
     }
 
     private void atualizarTabela() {
-        tabela.setItems(FXCollections.observableArrayList(atendimentoDAO.readAll()));
+        tabela.setItems(FXCollections.observableArrayList(atendimentoService.readAllAtendimento()));
     }
 
     private void limparFormulario() {
@@ -267,7 +269,7 @@ public class AtendimentoView extends VBox {
         atendimentoEmEdicao = null;
         salvarButton.setText("Salvar Atendimento");
 
-        clienteBox.setItems(FXCollections.observableArrayList(clienteDAO.readAll()));
-        barbeiroBox.setItems(FXCollections.observableArrayList(barbeiroDAO.readAll()));
+        clienteBox.setItems(FXCollections.observableArrayList(clienteService.readAllCliente()));
+        barbeiroBox.setItems(FXCollections.observableArrayList(barbeiroService.readAllBarbeiro()));
     }
 }

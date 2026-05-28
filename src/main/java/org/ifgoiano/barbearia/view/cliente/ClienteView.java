@@ -7,12 +7,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import org.ifgoiano.barbearia.dao.ClienteDAO;
 import org.ifgoiano.barbearia.model.Cliente;
+import org.ifgoiano.barbearia.service.ClienteService;
 import org.ifgoiano.barbearia.view.components.AlertComponent;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class ClienteView extends VBox {
 
-    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private  final ClienteService  clienteService = new ClienteService(new ClienteDAO());
     private final TableView<Cliente> tabela = new TableView<>();
 
     private final TextField nomeField = new TextField();
@@ -169,7 +170,7 @@ public class ClienteView extends VBox {
 
                     confirmacao.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
-                            clienteDAO.deleteById(cliente);
+                            clienteService.delete(cliente);
                             atualizarTabela();
                             limparFormulario();
                             AlertComponent.sucesso("Cliente excluído com sucesso.");
@@ -205,13 +206,13 @@ public class ClienteView extends VBox {
                 novoCliente.setNome(nome);
                 novoCliente.setTelefone(telefone);
                 novoCliente.setEmail(email);
-                clienteDAO.create(novoCliente);
+                clienteService.createCliente(novoCliente);
                 AlertComponent.sucesso("Cliente cadastrado com sucesso.");
             } else {
                 clienteEmEdicao.setNome(nome);
                 clienteEmEdicao.setTelefone(telefone);
                 clienteEmEdicao.setEmail(email);
-                clienteDAO.updateById(clienteEmEdicao);
+                clienteService.update(clienteEmEdicao);
                 AlertComponent.sucesso("Cliente atualizado com sucesso.");
             }
 
@@ -226,7 +227,7 @@ public class ClienteView extends VBox {
     }
 
     private void atualizarTabela() {
-        tabela.setItems(FXCollections.observableArrayList(clienteDAO.readAll()));
+        tabela.setItems(FXCollections.observableArrayList(clienteService.readAllCliente()));
     }
 
     private void limparFormulario() {

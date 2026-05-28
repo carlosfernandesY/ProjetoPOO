@@ -8,9 +8,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import org.ifgoiano.barbearia.dao.AtendimentoDAO;
+import org.ifgoiano.barbearia.dao.BarbeiroDAO;
+import org.ifgoiano.barbearia.dao.ClienteDAO;
+import org.ifgoiano.barbearia.service.AtendimentoService;
+import org.ifgoiano.barbearia.service.BarbeiroService;
+import org.ifgoiano.barbearia.service.ClienteService;
 import org.ifgoiano.barbearia.view.cliente.ClienteView;
 import org.ifgoiano.barbearia.view.barbeiro.BarbeiroView;
 import org.ifgoiano.barbearia.view.atendimento.AtendimentoView;
+
+import java.util.Objects;
 
 public class MainView extends Application {
 
@@ -88,7 +96,7 @@ public class MainView extends Application {
         // =========================================================
         btnAtendimentos.setOnAction(e -> {
             setActive(btnAtendimentos);
-            mainLayout.setCenter(new AtendimentoView());
+            mainLayout.setCenter(new AtendimentoView(new ClienteService(new ClienteDAO()),new BarbeiroService(new BarbeiroDAO()),new AtendimentoService(new AtendimentoDAO())));
         });
 
         btnClientes.setOnAction(e -> {
@@ -103,16 +111,16 @@ public class MainView extends Application {
 
         // Tela padrão: Atendimentos
         setActive(btnAtendimentos);
-        mainLayout.setCenter(new AtendimentoView());
+        mainLayout.setCenter(new AtendimentoView(new ClienteService(new ClienteDAO()),new BarbeiroService(new BarbeiroDAO()),new AtendimentoService(new AtendimentoDAO())));
 
         // =========================================================
         // SCENE E CSS GLOBAL
         // =========================================================
         Scene scene = new Scene(mainLayout, 1280, 720);
 
-        String cssPath = Thread.currentThread()
-                .getContextClassLoader()
-                .getResource("style.css")
+        String cssPath = Objects.requireNonNull(Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource("style.css"))
                 .toExternalForm();
         scene.getStylesheets().add(cssPath);
 
