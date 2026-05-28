@@ -12,12 +12,11 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/barbearia";
-    private static final String USER = "fernandes";
-    private static final String PASSWORD = "password";
+    private static final String URL = "jdbc:mysql://100.82.195.21:3306/barbearia";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
     public Connection getConnection() {
-
         try {
 
             return DriverManager.getConnection(
