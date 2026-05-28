@@ -1,5 +1,7 @@
 package org.ifgoiano.barbearia.service;
 
+import java.util.List;
+
 import org.ifgoiano.barbearia.dao.BarbeiroDAO;
 import org.ifgoiano.barbearia.model.Barbeiro;
 
@@ -20,5 +22,8 @@ public class BarbeiroService {
     }
     public void deleteBarbeiro(Barbeiro barbeiro) {
         this.barbeiroDAO.deleteById(barbeiro);
+    }
+    public List<Barbeiro> readAllBarbeiro(){
+    	return this.barbeiroDAO.readAll();
     }
 }

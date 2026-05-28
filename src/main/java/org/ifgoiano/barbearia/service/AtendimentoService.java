@@ -1,5 +1,7 @@
 package org.ifgoiano.barbearia.service;
 
+import java.util.List;
+
 import org.ifgoiano.barbearia.dao.AtendimentoDAO;
 import org.ifgoiano.barbearia.model.Atendimento;
 
@@ -25,5 +27,8 @@ public class AtendimentoService {
 
     public void deleteAtendimento(Atendimento atendimento) {
         this.atendimentoDAO.deleteById(atendimento);
+    }
+    public List<Atendimento> headAllAtendimento(){
+    	return this.atendimentoDAO.readAll();
     }
 }

@@ -1,5 +1,7 @@
 package org.ifgoiano.barbearia.service;
 
+import java.util.List;
+
 import org.ifgoiano.barbearia.dao.ClienteDAO;
 import org.ifgoiano.barbearia.model.Cliente;
 
@@ -21,5 +23,8 @@ public class ClienteService {
     }
     public boolean delete(Cliente cliente){
         return this.clienteDAO.deleteById(cliente);
+    }
+    public List<Cliente> readAllCliente(){
+    	return this.clienteDAO.readAll();
     }
 }
